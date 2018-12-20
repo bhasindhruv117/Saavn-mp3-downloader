@@ -11,32 +11,38 @@ json_decoder = JSONDecoder()
 headers = {
     'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:49.0) Gecko/20100101 Firefox/49.0'
 }
-
+os.system("clear")
+print("\nJio-Saavn Mp3 Downloader by Mani Goyal.\n\n")
 def input_query():
-    try:
-        search_query = input("Enter the song to search : ")
-        if len(search_query) <= 1:
-            raise IndexError
-        return ' '.join(search_query)
-    except IndexError:
-        print(color.BOLD + color.YELLOW + "Enter at least one search query." + color.END)
-        sys.exit()
+    
+    search_query = input("Enter the song to search : ")
+    if len(search_query) <= 1:
+        print("Please dont the field blank!!")
+        input_query()
+    return str(search_query)
+        
 
 def get_songs(query):
     url = "https://www.jiosaavn.com/search/"+query
     res = requests.get(url, headers=headers)
     soup = BeautifulSoup(res.text,"lxml")
     all_song_divs = soup.find_all('div',{"class":"hide song-json"})
-    if all_song_divs == None:
-        print("No match found!!")
-        exit()
     songs = []
     for i in all_song_divs:
         song_info = json_decoder.decode(i.text)
         songs.append(song_info)
+           
     return songs
-query = input("Enter the song to search : ")
+
+query = input_query()
+print("\nSearching.....")
 songs = get_songs(query)
+while len(songs)== 0 :
+        print("No result found!! Try a different keyword.")
+        query = input_query()
+        print("\nSearching.....")
+        songs = get_songs(query)
+
 os.system('clear')
 
 
