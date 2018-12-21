@@ -20,11 +20,11 @@ def input_query():
         print("Please dont the field blank!!")
         input_query()
     return str(search_query)
-        
+      
 
 def get_songs(query):
     url = "https://www.jiosaavn.com/search/"+query
-    res = requests.get(url, headers=headers)
+    res = requests.get(url, headers=headers, data =  [         ('bitrate', '320')]  )
     soup = BeautifulSoup(res.text,"lxml")
     all_song_divs = soup.find_all('div',{"class":"hide song-json"})
     songs = []
@@ -63,7 +63,10 @@ for i in songs:
     print(str(counter) + "." ,end=" ")
     print(i['title'] + " by " + i['singers'] + " of album "+ i["album"] )
     counter = counter + 1
-dl  = int(input("\n\nEnter the option: "))
+dl  = int(input("\n\nEnter the option(0 for none): "))
+if dl==0:
+    print("\nBye!!!")
+    exit()
 print("Downloading : " +songs[dl-1]['title']  + " by " + songs[dl-1]['singers'] + " of album "+ songs[dl-1]["album"] )
 
 import wget
