@@ -130,7 +130,7 @@ def download_album(album_choice):
         print("   " +i['duration'])
 
         counter = counter + 1
-    dl  = input("\n\nEnter the songs to download (100 for all / comma seperated values for particular songs)(0 for none): ")
+    dl  = input("\n\nEnter the songs to download (100 for full album / comma seperated values for particular songs/0 for none): ")
     path= album_choice['album']+" by " +album_choice['singers']
     if dl=='0' :
         print("\nBye!!!")
