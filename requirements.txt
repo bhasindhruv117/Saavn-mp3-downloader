@@ -1,0 +1,6 @@
+requests
+pyDes
+bs4
+wget
+eyed3
+html 
